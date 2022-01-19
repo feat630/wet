@@ -29,7 +29,7 @@ public class WetController {
 	@RequestMapping(value="/one")
 	public Map<String, Object> one(WetVO vo) {
 		Map<String, Object> result = Maps.newHashMap();
-		
+
 		result.put("data", wetService.getOne(vo));
 
 		return result;

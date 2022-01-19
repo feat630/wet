@@ -13,6 +13,24 @@ import wet.gradle.sts4.vo.WetVO;
 
 @Repository
 public class WetDAO extends CommonDAO {
+	int count = 0;
+	public int getCount(WetVO vo) {
+		StringBuilder sb = new StringBuilder();
+		
+		sb
+		.append(" SELECT ")
+			.append(" COUNT(*) AS count ")
+		.append(" FROM ")
+			.append(" wlist ")
+		;
+		
+		return getJdbcTemplate().queryForObject(sb.toString()
+				, new BeanPropertySqlParameterSource(vo)
+				, (rs, rowNum) -> {
+					return rs.getInt("count");
+				}
+			);
+	}
 
 	public List<WetVO> getList(WetVO vo) {
 		StringBuilder sb = new StringBuilder();
@@ -30,7 +48,7 @@ public class WetDAO extends CommonDAO {
 			);
 	}
 	
-	public List<WetVO> getOne(WetVO vo) {
+	public List<WetVO> getOne(WetVO vo, int count) {
 		StringBuilder sb = new StringBuilder();
 		Random rand = new Random();
 		
@@ -41,7 +59,7 @@ public class WetDAO extends CommonDAO {
 			.append(" wlist ")
 		.append(" WHERE ")
 			.append(" res_id = ")
-			.append((rand.nextInt(343)+1))
+			.append(rand.nextInt(count)+1)
 		;
 		
 		return getJdbcTemplate().query(sb.toString()

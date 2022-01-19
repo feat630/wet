@@ -22,4 +22,6 @@ public class WetVO {
 	private String resLat;
 	private String resLong;
 	private String resFamousMenu;
+	
+	private int count;
 }

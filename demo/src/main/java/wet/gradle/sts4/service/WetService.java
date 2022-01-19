@@ -18,7 +18,7 @@ public class WetService {
 	}
 
 	public List<WetVO> getOne(WetVO vo) {
-		return wetDAO.getOne(vo);
+		int count = wetDAO.getCount(vo);
+		return wetDAO.getOne(vo, count);
 	}
-
 }
