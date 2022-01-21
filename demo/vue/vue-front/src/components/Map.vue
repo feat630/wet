@@ -1,7 +1,9 @@
 <template>
   <div>
     <div id="map"></div>
-<h3 v-for="list in nameList.data" :key="list.resId">{{list.resLat}}</h3>
+    <h3 v-for="list in wlist.data" :key="list.resId">{{list.resName}}  {{list.resLat}}</h3>
+<h3 v-for="list in lateee.data" :key="list.resId">{{list.resName}}  {{list.resLat}}</h3>
+
   </div>
 </template>
 
@@ -15,7 +17,10 @@ export default {
       map: null,
       markers: [],
       infowindow: null,
-     nameList:[],
+      wlist:[],
+      newData: [],
+      lateee: null,
+      lon: [],
     };
   },
   methods: {
@@ -58,8 +63,8 @@ export default {
       http
         .get("/wet/one")
         .then(response=>{
-          this.nameList = response.data;
-          console.log(response.data);
+          this.wlist = response.data;
+          this.lateee = response.data;
         })
         .catch(e=>{
           console.log(e);
