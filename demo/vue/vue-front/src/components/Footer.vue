@@ -3,9 +3,9 @@
         <hr>
         <b-container class="bv-example-row" id="container">
             <b-row id="rows">
-                <b-col>email</b-col>
-                <b-col>GitHub</b-col>
-                <b-col>Discord</b-col>
+                <b-col><a href="mailto:630@hansung.ac.kr">email</a></b-col>
+                <b-col><a href="https://github.com/feat630/wet" target="_blank">GitHub</a></b-col>
+                <b-col><a href="#">Discord</a></b-col>
             </b-row>
         </b-container>
   </div>

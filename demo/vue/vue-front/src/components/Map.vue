@@ -1,59 +1,22 @@
 <template>
   <div>
     <div id="map"></div>
-    <div class="button-group">
-      <button @click="displayMarker(markerPositions1)">marker set 1</button>
-      <button @click="displayMarker(markerPositions2)">marker set 2</button>
-      <button @click="displayMarker([])">marker set 3 (empty)</button>
-      <button @click="displayInfoWindow">infowindow</button>
-    </div>
+<h3 v-for="list in nameList.data" :key="list.resId">{{list.resLat}}</h3>
   </div>
 </template>
 
 <script>
+import http from "../http-common";
+
 export default {
   name: "KakaoMap",
   data() {
     return {
       map: null,
-      markerPositions1: [
-        [33.452278, 126.567803],
-        [33.452671, 126.574792],
-        [33.451744, 126.572441],
-      ],
-      markerPositions2: [
-        [37.499590490909185, 127.0263723554437],
-        [37.499427948430814, 127.02794423197847],
-        [37.498553760499505, 127.02882598822454],
-        [37.497625593121384, 127.02935713582038],
-        [37.49629291770947, 127.02587362608637],
-        [37.49754540521486, 127.02546694890695],
-        [37.49646391248451, 127.02675574250912],
-      ],
       markers: [],
       infowindow: null,
+     nameList:[],
     };
-  },
-  mounted() {
-    navigator.geolocation.getCurrentPosition(pos => {
-      this.latitude = pos.coords.latitude;
-      this.longitude = pos.coords.longitude;
-
-      if (window.kakao && window.kakao.maps) {
-
-        this.initMap();
-
-      } else {
-        const script = document.createElement("script");
-        /* global kakao */
-        script.onload = () => kakao.maps.load(this.initMap);
-        script.src = "//dapi.kakao.com/v2/maps/sdk.js?autoload=false&appkey=26cf048b6fc3670e01f266ceb37d7f80";
-        document.head.appendChild(script);
-      }
-
-    }, err => {
-      alert(err.message);
-    })
   },
   methods: {
     initMap() {
@@ -90,8 +53,42 @@ export default {
 
         this.map.setBounds(bounds);
       }
+    },
+    axProtocol(){
+      http
+        .get("/wet/one")
+        .then(response=>{
+          this.nameList = response.data;
+          console.log(response.data);
+        })
+        .catch(e=>{
+          console.log(e);
+        })
     }
   }
+  , mounted() {
+    this.axProtocol();
+
+    navigator.geolocation.getCurrentPosition(pos => {
+      this.latitude = pos.coords.latitude;
+      this.longitude = pos.coords.longitude;
+
+      if (window.kakao && window.kakao.maps) {
+
+        this.initMap();
+
+      } else {
+        const script = document.createElement("script");
+        /* global kakao */
+        script.onload = () => kakao.maps.load(this.initMap);
+        script.src = "//dapi.kakao.com/v2/maps/sdk.js?autoload=false&appkey=26cf048b6fc3670e01f266ceb37d7f80";
+        document.head.appendChild(script);
+      }
+
+    }, err => {
+      alert(err.message);
+    });
+  },
 };
 </script>
 

@@ -2,7 +2,7 @@
   <div class="hello">
     <h1>전체 목록</h1>
     <hr>
-    <h3 v-for="user in users.data" :key="user.resId">{{user.resName}}</h3>
+    <h3 v-for="list in nameList.data" :key="list.resId">{{list.resName}}</h3>
   </div>
 </template>
 
@@ -13,15 +13,15 @@ export default {
   name: 'HelloWorld',
   data(){
     return{
-      users:[]
+      nameList:[]
     }
   },
   methods:{
-    retrieveUsers(){
+    axProtocol(){
       http
         .get("/wet/list")
         .then(response=>{
-          this.users = response.data;
+          this.nameList = response.data;
           console.log(response.data);
         })
         .catch(e=>{
@@ -30,7 +30,7 @@ export default {
     }
   },
   mounted(){
-    this.retrieveUsers();
+    this.axProtocol();
   }
 }
 </script>

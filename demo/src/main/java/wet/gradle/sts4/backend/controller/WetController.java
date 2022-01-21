@@ -40,8 +40,6 @@ public class WetController {
 	@RequestMapping(value="/count")
 	public int count(WetVO vo) {
 
-		
-
 		return wetService.getCount(vo);
 	}
 }
