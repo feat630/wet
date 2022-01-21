@@ -19,6 +19,8 @@ export default {
 <style>
 #container{
     text-align: center;
+    margin-top: 20px;
+    margin-bottom: 30px;
 }
 #rows{
     width: 60%;

@@ -21,4 +21,8 @@ public class WetService {
 		int count = wetDAO.getCount(vo);
 		return wetDAO.getOne(vo, count);
 	}
+	
+	public int getCount(WetVO vo) {
+		return wetDAO.getCount(vo);
+	}
 }
