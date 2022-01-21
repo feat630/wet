@@ -1,4 +1,4 @@
-package wet.gradle.sts4.controller;
+package wet.gradle.sts4.backend.controller;
 
 import java.util.Map;
 
@@ -8,8 +8,8 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.google.common.collect.Maps;
 
-import wet.gradle.sts4.service.WetService;
-import wet.gradle.sts4.vo.WetVO;
+import wet.gradle.sts4.backend.service.WetService;
+import wet.gradle.sts4.backend.vo.WetVO;
 
 @RestController
 @RequestMapping(value="/wet")

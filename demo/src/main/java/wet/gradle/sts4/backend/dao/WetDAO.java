@@ -1,4 +1,4 @@
-package wet.gradle.sts4.dao;
+package wet.gradle.sts4.backend.dao;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -9,7 +9,7 @@ import org.springframework.jdbc.core.namedparam.BeanPropertySqlParameterSource;
 import org.springframework.stereotype.Repository;
 
 import common.dao.CommonDAO;
-import wet.gradle.sts4.vo.WetVO;
+import wet.gradle.sts4.backend.vo.WetVO;
 
 @Repository
 public class WetDAO extends CommonDAO {

@@ -1,4 +1,4 @@
-package wet.gradle.sts4.vo;
+package wet.gradle.sts4.backend.vo;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
