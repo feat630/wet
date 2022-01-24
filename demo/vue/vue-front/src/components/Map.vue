@@ -1,8 +1,18 @@
 <template>
   <div>
     <div id="map"></div>
-    <h3 v-for="list in wlist.data" :key="list.resId">{{list.resName}}  {{list.resLat}}</h3>
-<h3 v-for="list in lateee.data" :key="list.resId">{{list.resName}}  {{list.resLat}}</h3>
+    <b-button-group>
+      <b-button variandt="outline-primary" v-on:click="randomPick">목표장소</b-button>
+      <b-button variandt="outline-primary" v-on:click="howToGo">도착지까지</b-button>
+      <b-button variandt="outline-primary" v-on:click="returnGeolocation">현재장소</b-button>
+    </b-button-group>
+    <!-- <h3 v-for="list in wlist.data" :key="list.resId">{{list.resName}}  {{list.resLat}}</h3>
+    <p>{{wlist.data[0].resId}}</p>
+    <p>{{lat}}</p>
+    <p>{{lon}}</p> -->
+    <b-table striped hover :items="wlist.data"></b-table>
+    <!-- <p>{{lateee.resName}}</p> -->
+    <!-- <h3 v-for="list in lateee.data" :key="list.resId">{{list.resName}}  {{list.resLat}}</h3> -->
 
   </div>
 </template>
@@ -17,10 +27,10 @@ export default {
       map: null,
       markers: [],
       infowindow: null,
-      wlist:[],
+      wlist:null,
       newData: [],
-      lateee: null,
-      lon: [],
+      lat: null,
+      lon: null,
     };
   },
   methods: {
@@ -64,11 +74,21 @@ export default {
         .get("/wet/one")
         .then(response=>{
           this.wlist = response.data;
-          this.lateee = response.data;
+          this.lat = this.wlist.data[0].resLat;
+          this.lon = this.wlist.data[0].resLong;
         })
         .catch(e=>{
           console.log(e);
         })
+    },
+    randomPick(){
+      this.displayMarker([[this.lat, this.lon]]);
+    },
+    returnGeolocation(){
+      this.displayMarker([[this.latitude, this.longitude]]);
+    },
+    howToGo(){
+      
     }
   }
   , mounted() {
@@ -103,13 +123,5 @@ export default {
   width: 70%;
   height: 400px;
   margin: auto;
-}
-
-.button-group {
-  margin: 10px 0px;
-}
-
-button {
-  margin: 0 3px;
 }
 </style>

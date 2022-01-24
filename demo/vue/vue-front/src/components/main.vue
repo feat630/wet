@@ -2,7 +2,7 @@
   <div class="hello">
     <h1>전체 목록</h1>
     <hr>
-    <h3 v-for="list in nameList.data" :key="list.resId">{{list.resName}}</h3>
+    <b-table id="table" striped hover :items="nameList.data"></b-table>
   </div>
 </template>
 
@@ -51,5 +51,9 @@ li {
 }
 a {
   color: #42b983;
+}
+#table {
+  width: 90%;
+  margin:auto;
 }
 </style>
