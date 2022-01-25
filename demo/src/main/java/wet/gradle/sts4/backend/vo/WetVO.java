@@ -1,5 +1,6 @@
 package wet.gradle.sts4.backend.vo;
 
+import common.vo.PaginVO;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -11,7 +12,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @Data
 @EqualsAndHashCode(callSuper = false)
-public class WetVO {
+public class WetVO extends PaginVO{
 
 	private int resId;
 	private String resName;
@@ -22,6 +23,4 @@ public class WetVO {
 	private String resLat;
 	private String resLong;
 	private String resFamousMenu;
-	
-	private int count;
 }

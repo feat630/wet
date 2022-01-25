@@ -1,19 +1,91 @@
 <template>
   <div class="hello">
     <h1>전체 목록</h1>
-    <hr>
-    <b-table id="table" striped hover :items="nameList.data"></b-table>
+    <b-skeleton-wrapper id="wrapper" :loading="loading">
+      <template #loading>
+        <b-skeleton-table id="skeletonTable"
+          :rows="10"
+          :columns="7"
+          :table-props="{ bordered: true, striped: true }"
+        ></b-skeleton-table>
+      </template>
+      <b-container>
+        <b-row>
+          <b-col sm="2"><b-form-select
+      v-model="selected"
+      :options="options"
+      class="mb-3"
+      value-field="item"
+      text-field="name"
+      disabled-field="notEnabled"
+    ></b-form-select></b-col>
+          <b-col sm="9"></b-col>
+          <b-col sm="1"><b-button @click="excelDown">Excel</b-button></b-col>
+        </b-row>
+      </b-container>
+      <b-table fixed id="table" striped hover :fields="fields" :items="res_list.data" :per-page="perPage" :current-page="currentPage" ></b-table>
+      <b-pagination id="paginations"
+        v-model="currentPage"
+        :total-rows="rows"
+        :per-page="perPage"
+        first-number
+        last-number
+        aria-controls="table"
+        limit=9
+        align="center"
+      >
+      </b-pagination>
+    </b-skeleton-wrapper>
+
+    
   </div>
 </template>
 
 <script>
 import http from "../http-common";
+import Xlsx from 'xlsx'
 
 export default {
   name: 'HelloWorld',
   data(){
     return{
-      nameList:[]
+      res_list:[],
+      fields:[
+        {
+          key: 'resId',
+          label: '번호'
+        },
+        {
+          key: 'resName',
+          label: '상호명'
+        },
+        {
+          key: 'resType',
+          label: '종류'
+        },
+        {
+          key: 'resAddrRoad',
+          label: '주소'
+        },
+        {
+          key: 'resHoliday',
+          label: '휴무일'
+        },
+        {
+          key: 'resFamousMenu',
+          label: '대표메뉴'
+        }
+      ],
+      perPage: 10,
+      currentPage: 1,
+      loading: true,
+
+      selected: '10',
+        options: [
+          { item: '10', name: '10' },
+          { item: '20', name: '20' },
+          { item: '50', name: '50' },
+        ]
     }
   },
   methods:{
@@ -21,17 +93,30 @@ export default {
       http
         .get("/wet/list")
         .then(response=>{
-          this.nameList = response.data;
+          this.res_list = response.data;
           console.log(response.data);
+          setTimeout(() => this.loading = false, 300);
         })
         .catch(e=>{
           console.log(e);
         })
-    }
+    },
+    excelDown() {
+      const workBook = Xlsx.utils.book_new()
+      const workSheet = Xlsx.utils.json_to_sheet(this.res_list.data)
+      Xlsx.utils.book_append_sheet(workBook, workSheet, 'example')
+      Xlsx.writeFile(workBook, 'example.xlsx')
+    },
   },
   mounted(){
+    // setTimeout(() => this.axProtocol(), 2000);
     this.axProtocol();
-  }
+  },
+  computed: {
+      rows() {
+        return this.res_list.data.length
+      }
+    }
 }
 </script>
 
@@ -52,8 +137,14 @@ li {
 a {
   color: #42b983;
 }
-#table {
+#table, #wrapper {
   width: 90%;
   margin:auto;
+}
+#paginations{
+  margin: 30px 0;
+}
+#selec{
+  width: 10%;
 }
 </style>

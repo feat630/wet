@@ -3,8 +3,9 @@
     <div id="map"></div>
     <b-button-group>
       <b-button variandt="outline-primary" v-on:click="randomPick">목표장소</b-button>
-      <b-button variandt="outline-primary" v-on:click="howToGo">도착지까지</b-button>
       <b-button variandt="outline-primary" v-on:click="returnGeolocation">현재장소</b-button>
+      <b-button variandt="outline-primary" v-on:click="howToGo">도착지까지</b-button>
+      <b-button variandt="outline-primary" v-on:click="[ randomPick(), axProtocol()]">새로뽑기</b-button>
     </b-button-group>
     <!-- <h3 v-for="list in wlist.data" :key="list.resId">{{list.resName}}  {{list.resLat}}</h3>
     <p>{{wlist.data[0].resId}}</p>
@@ -76,6 +77,7 @@ export default {
           this.wlist = response.data;
           this.lat = this.wlist.data[0].resLat;
           this.lon = this.wlist.data[0].resLong;
+          this.drawMap();
         })
         .catch(e=>{
           console.log(e);
@@ -89,12 +91,9 @@ export default {
     },
     howToGo(){
       
-    }
-  }
-  , mounted() {
-    this.axProtocol();
-
-    navigator.geolocation.getCurrentPosition(pos => {
+    },
+    drawMap() {
+      navigator.geolocation.getCurrentPosition(pos => {
       this.latitude = pos.coords.latitude;
       this.longitude = pos.coords.longitude;
 
@@ -113,6 +112,12 @@ export default {
     }, err => {
       alert(err.message);
     });
+    }
+  }
+  , mounted() {
+    this.axProtocol();
+    
+    
   },
 };
 </script>
