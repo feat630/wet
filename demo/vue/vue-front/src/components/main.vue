@@ -34,6 +34,7 @@
         limit=9
         align="center"
       >
+      <b-button>목록추가</b-button>
       </b-pagination>
     </b-skeleton-wrapper>
 
@@ -53,27 +54,33 @@ export default {
       fields:[
         {
           key: 'resId',
-          label: '번호'
+          label: '번호',
+          sortable: true
         },
         {
           key: 'resName',
-          label: '상호명'
+          label: '상호명',
+          sortable: true
         },
         {
           key: 'resType',
-          label: '종류'
+          label: '종류',
+          sortable: true
         },
         {
           key: 'resAddrRoad',
-          label: '주소'
+          label: '주소',
+          sortable: true
         },
         {
           key: 'resHoliday',
-          label: '휴무일'
+          label: '휴무일',
+          sortable: true
         },
         {
           key: 'resFamousMenu',
-          label: '대표메뉴'
+          label: '대표메뉴',
+          sortable: true
         }
       ],
       perPage: 10,
