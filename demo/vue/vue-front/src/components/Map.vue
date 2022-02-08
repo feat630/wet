@@ -53,8 +53,7 @@
         </b-card-text>
       </b-card>
       <div id="sidebar-div" class="px-3 py-3 text-center">
-        <b-button class="mr-auto ml-auto">리뷰쓰러가기</b-button>
-        
+        <b-button :to="{name: 'write', params: {wlist}}" class="mr-auto ml-auto">리뷰쓰러가기</b-button>
       </div>
     </b-sidebar>
 

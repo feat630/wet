@@ -7,6 +7,7 @@ import javax.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.google.common.collect.Maps;
@@ -45,4 +46,11 @@ public class ReviewController {
 
 		return reviewService.getCount(vo);
 	}
+	
+	@RequestMapping(value="/write", method = RequestMethod.POST)
+	public void write(ReviewVO vo) {
+		
+		reviewService.write(vo);
+	}
+	
 }

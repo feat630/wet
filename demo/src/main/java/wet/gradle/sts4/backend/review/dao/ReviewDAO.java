@@ -64,6 +64,21 @@ public class ReviewDAO extends CommonDAO {
 				, (rs, rowNum) -> getReviewVO(rs, false)
 			);
 	}
+	
+	public int insertPost(ReviewVO vo) {
+		StringBuilder sb = new StringBuilder();
+
+		sb
+		.append(" insert into ")
+		.append(" wReview(res_id, user_id, image, rating, user_review) ")
+		.append(" values ")
+			.append(" (:resId, :userId, :image, :rating, :userReview) ")
+		;
+
+		return getJdbcTemplate().update(sb.toString()
+			, new BeanPropertySqlParameterSource(vo)
+		);
+	}
 
 	private ReviewVO getReviewVO(ResultSet rs, boolean isList) throws SQLException {
 		if( isList ) {

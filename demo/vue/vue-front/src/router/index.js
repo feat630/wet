@@ -4,6 +4,7 @@ import HelloWorld from '@/components/HelloWorld'
 import main from '@/components/main'
 import Map from '@/components/Map'
 import Login from '@/components/Login'
+import Write from '@/components/Write'
 
 Vue.use(Router)
 
@@ -28,6 +29,12 @@ export default new Router({
       path: '/login',
       name: 'login',
       component: Login
+    }
+    ,{
+      path: '/write',
+      name: 'write',
+      component: Write,
+      props: true
     }
   ]
 })
