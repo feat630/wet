@@ -1,4 +1,4 @@
-package wet.gradle.sts4.backend.controller;
+package wet.gradle.sts4.backend.restaurant.controller;
 
 import java.util.Map;
 
@@ -9,8 +9,8 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.google.common.collect.Maps;
 
-import wet.gradle.sts4.backend.service.WetService;
-import wet.gradle.sts4.backend.vo.WetVO;
+import wet.gradle.sts4.backend.restaurant.service.WetService;
+import wet.gradle.sts4.backend.restaurant.vo.WetVO;
 
 @CrossOrigin(origins = "*", allowedHeaders = "*")
 @RestController

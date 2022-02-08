@@ -1,12 +1,12 @@
-package wet.gradle.sts4.backend.service;
+package wet.gradle.sts4.backend.restaurant.service;
 
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import wet.gradle.sts4.backend.dao.WetDAO;
-import wet.gradle.sts4.backend.vo.WetVO;
+import wet.gradle.sts4.backend.restaurant.dao.WetDAO;
+import wet.gradle.sts4.backend.restaurant.vo.WetVO;
 
 @Service
 public class WetService {

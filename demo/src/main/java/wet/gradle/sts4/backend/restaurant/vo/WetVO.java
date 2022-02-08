@@ -1,4 +1,4 @@
-package wet.gradle.sts4.backend.vo;
+package wet.gradle.sts4.backend.restaurant.vo;
 
 import common.vo.PaginVO;
 import lombok.AllArgsConstructor;

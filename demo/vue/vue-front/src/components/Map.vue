@@ -1,37 +1,64 @@
 <template>
-  <keep-alive>
   <div>
-    <div id="map" 
-    :class="{centerAni: isCenter, leftAni: !isCenter}"></div>
-    <b-button-group :class="{centerAni: isCenter, leftBtn: !isCenter}">
-      <b-button variandt="outline-primary" v-on:click="randomPick">목표장소</b-button>
-      <b-button variandt="outline-primary" v-on:click="returnGeolocation">현재장소</b-button>
-      <b-button variandt="outline-primary" v-on:click="howToGo">도착지까지</b-button>
-      <b-button variandt="outline-primary" v-on:click="newRandom()">새로뽑기</b-button>
-      <b-button v-b-toggle.sidebar-right @click="isCenter = !isCenter" >Go to Sidebar</b-button>
-    </b-button-group>
-    <!-- <h3 v-for="list in wlist.data" :key="list.resId">{{list.resName}}  {{list.resLat}}</h3>
-    <p>{{wlist.data[0].resId}}</p>
+    <div id="main-contents" :class="{centerAni: isCenter, leftAni: !isCenter}">
+      <div id="map"></div>
+      <h1 class="mt-4">{{wlist.data[0].resName}}</h1>
+      <b-button-group class="mt-4">
+        <b-button variandt="outline-primary" v-on:click="randomPick">목표장소</b-button>
+        <b-button variandt="outline-primary" v-on:click="returnGeolocation">현재장소</b-button>
+        <b-button variandt="outline-primary" v-on:click="howToGo">도착지까지</b-button>
+        <b-button variandt="outline-primary" v-on:click="newRandom()">새로뽑기</b-button>
+        <!-- <b-button v-b-toggle.sidebar-right @click="isCenter = !isCenter" >더보기</b-button> -->
+        <b-button v-b-toggle.sidebar-right >더보기</b-button>
+      </b-button-group>
+    </div>
+  
+    <!-- <h3 v-for="list in wreview.data" :key="list.userId">{{list.rating}}  {{list.userReview}}</h3> -->
+    <!-- <p>{{wlist.data[list].resId}}</p>
     <p>{{lat}}</p>
     <p>{{lon}}</p> -->
     
     <!-- <p>{{lateee.resName}}</p> -->
     <!-- <h3 v-for="list in lateee.data" :key="list.resId">{{list.resName}}  {{list.resLat}}</h3> -->
-    <b-sidebar id="sidebar-right" title="식당정보" style="width," right shadow>
-      <div id="sidebar-div" class="px-3 py-3 ">
-        
-        <p>{{wlist.data[0].resType}}</p>
-        <p>{{wlist.data[0].resName}}</p>
-        <p>{{wlist.data[0].resAddrRoad}}</p>
-        <p>{{wlist.data[0].resHoliday}}</p>
-        <p>{{wlist.data[0].resFamousMenu}}</p>
-        <!-- <b-table striped hover :items="wlist.data"></b-table> -->
+    <b-sidebar id="sidebar-right" title="식당정보" style="width," right shadow backdrop>
+      <b-card
+        :title=wlist.data[0].resName
+        img-src="https://picsum.photos/600/300/?image=25"
+        img-alt="Image"
+        img-top
+        tag="article"
+        style="max-width: 90%;"
+        class="mb-2 ml-auto mr-auto"
+      >
+        <b-card-text>
+          {{wlist.data[0].resType}} | {{wlist.data[0].resAddrRoad}}<br>
+          {{wlist.data[0].resHoliday}}<br>
+          {{wlist.data[0].resFamousMenu}}
+        </b-card-text>
+      </b-card>
+      <b-card
+        v-for="list in wreview.data" :key="list.userId"
+        :title=list.resId
+        img-src="https://picsum.photos/600/300/?image=25"
+        img-alt="Image"
+        img-top
+        tag="article"
+        style="max-width: 90%;"
+        class="mb-2 ml-auto mr-auto"
+      >
+        <b-card-text> 
+          {{list.userReview}}<br>
+          {{list.image}}
+          <b-form-rating v-model="list.rating" class="w-75 ml-auto mr-auto" readonly></b-form-rating>
+        </b-card-text>
+      </b-card>
+      <div id="sidebar-div" class="px-3 py-3 text-center">
+        <b-button class="mr-auto ml-auto">리뷰쓰러가기</b-button>
         
       </div>
     </b-sidebar>
 
   </div>
-  </keep-alive>
 </template>
 
 <script>
@@ -46,7 +73,7 @@ export default {
       markers: [],
       infowindow: null,
       wlist:null,
-      newData: [],
+      wreview: null,
       lat: null,
       lon: null,
     };
@@ -87,18 +114,36 @@ export default {
         this.map.setBounds(bounds);
       }
     },
-    axProtocol(){
-      http
-        .get("/wet/one")
+    async axProtocol(){
+      try{
+        await http
+          .get("/wet/one")
+          .then(response=>{
+            this.wlist = response.data;
+            this.lat = this.wlist.data[0].resLat;
+            this.lon = this.wlist.data[0].resLong;
+          })
+          .catch(e=>{
+            console.log(e);
+          });
+        await http
+        .get("/review/one", {
+          params: {
+            resId: this.wlist.data[0].resId
+          }
+        })
         .then(response=>{
-          this.wlist = response.data;
-          this.lat = this.wlist.data[0].resLat;
-          this.lon = this.wlist.data[0].resLong;
-          //this.drawMap()
+          this.wreview = response.data;
         })
         .catch(e=>{
           console.log(e);
-        })
+        });
+      } catch (error) {
+        console.log(error);
+      }
+    },
+    axProtocol1(){
+      
     },
     randomPick(){
       this.displayMarker([[this.lat, this.lon]]);
@@ -108,7 +153,9 @@ export default {
     },
     newRandom(){
       this.axProtocol();
+      
       setTimeout(() => {
+        this.axProtocol1();
         this.displayMarker([[this.lat, this.lon]]);
       }, 100); 
     },
@@ -139,10 +186,12 @@ export default {
   }
   , mounted() {
     this.axProtocol();
+    
     // setTimeout(this.drawMap(), 2000);
     setTimeout(() => {
-        this.drawMap();
-      }, 100); 
+      this.axProtocol1();
+      this.drawMap();
+    }, 100); 
   },
 };
 </script>
@@ -151,7 +200,7 @@ export default {
 <style>
 #map {
   width: 65%;
-  height: 400px;
+  height: 450px;
   margin: auto;
 }
 /* 출력할 때는 왼쪽에서 오른쪽으로 */
@@ -168,14 +217,8 @@ export default {
   /* width: 65%;
   height: 400px;
   margin: auto; */
-  transform: translateX(-23.5%);
-  transition-duration: 0.45s;
-  animation-timing-function: linear;
-}
-
-.leftBtn{
-  transform: translateX(-50%);
-  transition-duration: 0.45s;
+  transform: translateX(-15%);
+  transition-duration: 0.47s;
   animation-timing-function: linear;
 }
 
@@ -184,7 +227,13 @@ export default {
   height: 400px;
   margin: auto; */
   transform: translateX(0%);
-  transition-duration: 0.45s;
+  transition-duration: 0.51s;
   animation-timing-function: linear;
+}
+
+.btn:focus, .btn:active{
+  box-shadow: none;
+  outline-color: none;
+  outline: none;
 }
 </style>
