@@ -10,7 +10,7 @@
                     label-cols-sm="3"
                     label-align-sm="right"
                 >
-                    <b-form-input disabled v-model="$attrs.wlist.data[0].resName" id="nested-street"></b-form-input>
+                    <b-form-input disabled v-model="wlist.data[0].resName" id="nested-street"></b-form-input>
                 </b-form-group>
 
                 <b-form-group
@@ -56,13 +56,14 @@
                 >
                     <b-form-rating v-model="rating"></b-form-rating>
                 </b-form-group>
-                <b-button @click="axProtocol()" class="mt-3">작성</b-button>
+                <b-button to="/" @click="axProtocol(), toast('b-toaster-top-center')" class="mt-3">작성</b-button>
             </b-card>
-        <p>{{$attrs.wlist.data[0].resName}}</p>
+        <p>{{wlist.data[0].resName}}</p>
         <p>{{rating}}</p>
         <p>{{userId}}</p>
         <p>{{userReview}}</p>
         <p v-for="item in image" :key="item.name">{{item.name}}|{{item.lastModified}}</p>
+        
  
         
     </div>
@@ -84,12 +85,18 @@ import http from "../http-common";
 
 export default {
     name: "Review",
+    props: {
+        wlist: {
+            type: Object,
+            default: "",
+        }
+    },
     data() {
         return {
-            resId: $attrs.wlist.data[0].resId,
+            resId: this.wlist.data[0].resId,
             userId:"",
             userReview:"",
-            image:"",
+            image:null,
             rating: 3,
 
             // wlist:null,
@@ -99,9 +106,10 @@ export default {
     computed: {
         setParams() {
             const params = {
+                resId: this.resId,
                 userId: this.userId,
                 userReview: this.userReview,
-                image: this.image,
+                // image: this.image,
                 rating: this.rating,
             };
             return params;
@@ -114,12 +122,20 @@ export default {
     //     }
     // },
     methods: {
-    
+        toast(toaster, append = false) {
+            this.counter++
+            this.$bvToast.toast(`Toast ${this.counter} body content`, {
+            title: `Toaster ${toaster}`,
+            toaster: toaster,
+            solid: true,
+            appendToast: append
+        })
+    },
     axProtocol(){
     http
         .post("/review/write", this.setParams)
         .then(response=>{
-           
+           console.log(response);
         })
         .catch(e=>{
             console.log(e);

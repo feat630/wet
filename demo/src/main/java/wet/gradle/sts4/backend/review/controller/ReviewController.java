@@ -6,6 +6,7 @@ import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
@@ -48,7 +49,12 @@ public class ReviewController {
 	}
 	
 	@RequestMapping(value="/write", method = RequestMethod.POST)
-	public void write(ReviewVO vo) {
+	public void write(@RequestBody ReviewVO vo) {
+//		vo.setResId(Integer.parseInt(request.getParameter("resId")));
+//		vo.setUserId((request.getParameter("userId")));
+//		vo.setUserReview((request.getParameter("userReview")));
+//		vo.setImage((request.getParameter("image")));
+//		vo.setRating(Integer.parseInt(request.getParameter("rating")));
 		
 		reviewService.write(vo);
 	}
