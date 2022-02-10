@@ -2,7 +2,6 @@
   <div id="app">
     <Header/>
       <router-view/>
-    
     <Footer/>
   </div>
 </template>
@@ -28,5 +27,8 @@ export default {
   text-align: center;
   color: #2c3e50;
   min-height: 100%;
+}
+#sidebar-right {
+  width: 30%;
 }
 </style>

@@ -1,12 +1,12 @@
 <template>
   <div>
-    <div id="main-contents" :class="{centerAni: isCenter, leftAni: !isCenter}">
+    <div id="main-contents"> <!--:class="{centerAni: isCenter, leftAni: !isCenter}"> -->
       <div id="map"></div>
       <h1 class="mt-4">{{wlist.data[0].resName}}</h1>
       <b-button-group class="mt-4">
         <b-button variandt="outline-primary" v-on:click="randomPick">목표장소</b-button>
         <b-button variandt="outline-primary" v-on:click="returnGeolocation">현재장소</b-button>
-        <b-button variandt="outline-primary" v-on:click="howToGo">도착지까지</b-button>
+        <b-button variandt="outline-primary" >도착지까지</b-button>
         <b-button variandt="outline-primary" v-on:click="newRandom()">새로뽑기</b-button>
         <!-- <b-button v-b-toggle.sidebar-right @click="isCenter = !isCenter" >더보기</b-button> -->
         <b-button v-b-toggle.sidebar-right >더보기</b-button>
@@ -67,14 +67,14 @@ export default {
   name: "KakaoMap",
   data() {
     return {
-      isCenter: true,
+      isCenter: "",
       map: null,
       markers: [],
       infowindow: null,
-      wlist:null,
-      wreview: null,
-      lat: null,
-      lon: null,
+      wlist:"",
+      wreview: "",
+      lat: "",
+      lon: "",
     };
   },
   methods: {
@@ -209,9 +209,7 @@ export default {
   margin: auto;
 } */
 /* 사라질 때는 아래로 */
-#sidebar-right {
-  width: 30%;
-}
+
 .leftAni {
   /* width: 65%;
   height: 400px;

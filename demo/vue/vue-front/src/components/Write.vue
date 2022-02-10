@@ -5,17 +5,17 @@
         <h1 class="mt-4 mb-4">리뷰쓰기</h1>
             <b-card class="w-25 mr-auto ml-auto" bg-variant="light">
                 <b-form-group
-                    label="음식점이름:"
-                    label-for="nested-street"
+                    label="음식점:"
+                    label-for="resId"
                     label-cols-sm="3"
                     label-align-sm="right"
                 >
-                    <b-form-input disabled v-model="wlist.data[0].resName" id="nested-street"></b-form-input>
+                    <b-form-input disabled v-model="wlist.data[0].resName" id="resId"></b-form-input>
                 </b-form-group>
 
                 <b-form-group
                     label="닉네임:"
-                    label-for="nested-city"
+                    label-for="userId"
                     label-cols-sm="3"
                     label-align-sm="right"
                 >
@@ -24,7 +24,7 @@
 
                 <b-form-group
                     label="리뷰:"
-                    label-for="nested-state"
+                    label-for="userReview"
                     label-cols-sm="3"
                     label-align-sm="right"
                 >
@@ -32,16 +32,17 @@
                 </b-form-group>
 
                 <b-form-group
-                    label="사진 첨부:"
-                    label-for="nested-country"
+                    label="사진첨부:"
+                    label-for="image"
                     label-cols-sm="3"
                     label-align-sm="right"
                     style="text-align:center"
                 >
                     <b-form-file
+                        id="image"
                         v-model="image"
                         multiple
-                        :state="Boolean(file1)"
+                        :state="Boolean(image)"
                         placeholder="Choose a file"
                         drop-placeholder="Drop file here..."
                     ></b-form-file>
@@ -58,10 +59,6 @@
                 </b-form-group>
                 <b-button to="/" @click="axProtocol(), toast('b-toaster-top-center')" class="mt-3">작성</b-button>
             </b-card>
-        <p>{{wlist.data[0].resName}}</p>
-        <p>{{rating}}</p>
-        <p>{{userId}}</p>
-        <p>{{userReview}}</p>
         <p v-for="item in image" :key="item.name">{{item.name}}|{{item.lastModified}}</p>
         
  
@@ -123,9 +120,8 @@ export default {
     // },
     methods: {
         toast(toaster, append = false) {
-            this.counter++
-            this.$bvToast.toast(`Toast ${this.counter} body content`, {
-            title: `Toaster ${toaster}`,
+            this.$bvToast.toast(`리뷰작성완료!`, {
+            title: `알람`,
             toaster: toaster,
             solid: true,
             appendToast: append
