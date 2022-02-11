@@ -1,5 +1,10 @@
 # wet
-what eat today
+what eat today?
+
+백엔드: Spring MVC
+프론트엔드: Vue.js
+데이터베이스: MySQL
+
 # photo
 ![1](https://user-images.githubusercontent.com/71821007/153543519-f50ceb84-5abe-4ab4-ac78-fe220972dde2.PNG)
 ![2](https://user-images.githubusercontent.com/71821007/153543524-577d6789-3fea-49b6-aa3d-6c3c91fba6fb.PNG)
