@@ -5,6 +5,8 @@ import main from '@/components/main'
 import Map from '@/components/Map'
 import Login from '@/components/Login'
 import Write from '@/components/Write'
+import SignUp from '@/components/SignUp'
+import AddRestaurant from '@/components/AddRestaurant'
 
 Vue.use(Router)
 
@@ -37,5 +39,15 @@ export default new Router({
       component: Write,
       props: true
     }
+    ,{
+      path: '/signup',
+      name: 'signup',
+      component: SignUp
+    }
+	,{
+		path: '/addRestaurant',
+      name: 'addRestaurant',
+      component: AddRestaurant
+	}
   ]
 })

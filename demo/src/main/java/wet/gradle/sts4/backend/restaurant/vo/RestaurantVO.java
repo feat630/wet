@@ -12,7 +12,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @Data
 @EqualsAndHashCode(callSuper = false)
-public class WetVO extends PaginVO{
+public class RestaurantVO extends PaginVO{
 
 	private int resId;
 	private String resName;
@@ -23,4 +23,5 @@ public class WetVO extends PaginVO{
 	private String resLat;
 	private String resLong;
 	private String resFamousMenu;
+	private int resRating;
 }

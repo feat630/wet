@@ -2,7 +2,7 @@
   <b-row>
     <b-col></b-col>
     <b-col>
-      <h1>Login</h1>
+      <h1>회원가입</h1>
       <b-form @submit="onSubmit" @reset="onReset" v-if="show">
         <b-form-group
           id="input-group-1"
@@ -27,8 +27,8 @@
             required
           ></b-form-input>
         </b-form-group>
-        <b-button type="submit" variant="primary">로그인</b-button>
-        <b-button to="/signup" type="reset" variant="danger">회원가입</b-button>
+        <b-button type="submit" variant="primary">Submit</b-button>
+        <b-button type="reset" variant="danger">Reset</b-button>
       </b-form>
     </b-col>
     <b-col></b-col>

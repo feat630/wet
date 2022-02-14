@@ -1,5 +1,7 @@
 package wet.gradle.sts4.backend.review.vo;
 
+import java.sql.Date;
+
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -17,4 +19,5 @@ public class ReviewVO {
 	private String image;
 	private int rating;
 	private String userReview;
+	private Date date;
 }

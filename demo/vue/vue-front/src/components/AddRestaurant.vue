@@ -3,27 +3,73 @@
     <div id="main-contents">
       
         <h1 class="mt-4 mb-4">리뷰쓰기</h1>
-            <b-card class="w-25 mr-auto ml-auto" bg-variant="light">
-                <b-form-group
-                    label="음식점:"
-                    label-for="resId"
+        <b-card class="w-25 mr-auto ml-auto" bg-variant="light">
+
+				<b-form-group
+                    label="식당명:"
+                    label-for="resName"
                     label-cols-sm="3"
                     label-align-sm="right"
                 >
-                    <b-form-input disabled v-model="wlist.data[0].resName" id="resId"></b-form-input>
+                    <b-form-input id="resName" v-model="resName"></b-form-input>
                 </b-form-group>
 
                 <b-form-group
-                    label="닉네임:"
-                    label-for="userId"
+                    label="식당분류:"
+                    label-for="resType"
                     label-cols-sm="3"
                     label-align-sm="right"
                 >
-                    <b-form-input id="userId" v-model="userId"></b-form-input>
+                    <b-form-input id="resType" v-model="resType"></b-form-input>
                 </b-form-group>
 
                 <b-form-group
-                    label="리뷰:"
+                    label="주소:"
+                    label-for="userReview"
+                    label-cols-sm="3"
+                    label-align-sm="right"
+                >
+                    <b-form-input id="userReview" v-model="userReview"></b-form-input>
+                </b-form-group>
+
+				<b-form-group
+                    label="상세주소:"
+                    label-for="userReview"
+                    label-cols-sm="3"
+                    label-align-sm="right"
+                >
+                    <b-form-input id="userReview" v-model="userReview"></b-form-input>
+                </b-form-group>
+
+				<b-form-group
+                    label="휴일:"
+                    label-for="userReview"
+                    label-cols-sm="3"
+                    label-align-sm="right"
+                >
+                    <b-form-input id="userReview" v-model="userReview"></b-form-input>
+                </b-form-group>
+
+				<b-form-group
+                    label="위도:"
+                    label-for="userReview"
+                    label-cols-sm="3"
+                    label-align-sm="right"
+                >
+                    <b-form-input id="userReview" v-model="userReview"></b-form-input>
+                </b-form-group>
+
+				<b-form-group
+                    label="경도:"
+                    label-for="userReview"
+                    label-cols-sm="3"
+                    label-align-sm="right"
+                >
+                    <b-form-input id="userReview" v-model="userReview"></b-form-input>
+                </b-form-group>
+
+				<b-form-group
+                    label="대표메뉴:"
                     label-for="userReview"
                     label-cols-sm="3"
                     label-align-sm="right"
@@ -47,21 +93,8 @@
                         drop-placeholder="Drop file here..."
                     ></b-form-file>
                 </b-form-group>
-
-                <b-form-group
-                    label="별점"
-                    label-cols-sm="3"
-                    label-align-sm="right"
-                    class="mb-0"
-                    
-                >
-                    <b-form-rating v-model="rating"></b-form-rating>
-                </b-form-group>
                 <b-button to="/" @click="axProtocol(), toast('b-toaster-top-center')" class="mt-3">작성</b-button>
             </b-card>
-        <p v-for="item in image" :key="item.name">{{item.name}}|{{item.lastModified}}</p>
-        
- 
         
     </div>
   
@@ -82,35 +115,16 @@ import http from "../http-common";
 
 export default {
     name: "Review",
-    props: {
-        wlist: {
-            type: Object,
-            default: "",
-        }
-    },
     data() {
         return {
             resId: this.wlist.data[0].resId,
             userId:"",
             userReview:"",
             image:null,
-            rating: "",
 
             // wlist:null,
             // wreview: null,
         };
-    },
-    computed: {
-        setParams() {
-            const params = {
-                resId: this.resId,
-                userId: this.userId,
-                userReview: this.userReview,
-                // image: this.image,
-                rating: this.rating,
-            };
-            return params;
-        }
     },
     // props:{
     //     wlist:{

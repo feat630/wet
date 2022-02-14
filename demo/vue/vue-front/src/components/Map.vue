@@ -48,6 +48,7 @@
       >
         <b-card-text> 
           {{list.userReview}}<br>
+          {{list.date}}<br>
           {{list.image}}
           <b-form-rating v-model="list.rating" class="w-75 ml-auto mr-auto" readonly></b-form-rating>
         </b-card-text>
@@ -71,7 +72,7 @@ export default {
       map: null,
       markers: [],
       infowindow: null,
-      wlist:"",
+      wlist:[],
       wreview: "",
       lat: "",
       lon: "",
@@ -116,7 +117,7 @@ export default {
     async axProtocol(){
       try{
         await http
-          .get("/wet/one")
+          .get("/restaurant/one")
           .then(response=>{
             this.wlist = response.data;
             this.lat = this.wlist.data[0].resLat;

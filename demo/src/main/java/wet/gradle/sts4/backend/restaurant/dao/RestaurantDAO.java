@@ -9,12 +9,12 @@ import org.springframework.jdbc.core.namedparam.BeanPropertySqlParameterSource;
 import org.springframework.stereotype.Repository;
 
 import common.dao.CommonDAO;
-import wet.gradle.sts4.backend.restaurant.vo.WetVO;
+import wet.gradle.sts4.backend.restaurant.vo.RestaurantVO;
 
 @Repository
-public class WetDAO extends CommonDAO {
+public class RestaurantDAO extends CommonDAO {
 	int count = 0;
-	public int getCount(WetVO vo) {
+	public int getCount(RestaurantVO vo) {
 		StringBuilder sb = new StringBuilder();
 		
 		sb
@@ -32,7 +32,7 @@ public class WetDAO extends CommonDAO {
 			);
 	}
 
-	public List<WetVO> getList(WetVO vo) {
+	public List<RestaurantVO> getList(RestaurantVO vo) {
 		StringBuilder sb = new StringBuilder();
 		
 		sb
@@ -44,13 +44,14 @@ public class WetDAO extends CommonDAO {
 		
 		return getJdbcTemplate().query(sb.toString()
 				, new BeanPropertySqlParameterSource(vo)
-				, (rs, rowNum) -> getWetVO(rs, true)
+				, (rs, rowNum) -> getRestaurantVO(rs, true)
 			);
 	}
 	
-	public List<WetVO> getOne(WetVO vo, int count) {
+	public List<RestaurantVO> getOne(RestaurantVO vo, int count) {
 		StringBuilder sb = new StringBuilder();
 		Random rand = new Random();
+		rand.setSeed(System.currentTimeMillis());
 		
 		sb
 		.append(" SELECT ")
@@ -64,13 +65,43 @@ public class WetDAO extends CommonDAO {
 		
 		return getJdbcTemplate().query(sb.toString()
 				, new BeanPropertySqlParameterSource(vo)
-				, (rs, rowNum) -> getWetVO(rs, false)
+				, (rs, rowNum) -> getRestaurantVO(rs, false)
 			);
 	}
+	
+	public int addRestaurant(RestaurantVO vo) {
+		StringBuilder sb = new StringBuilder();
 
-	private WetVO getWetVO(ResultSet rs, boolean isList) throws SQLException {
+		sb
+		.append(" insert into ")
+			.append(" wlist(res_name, res_type, res_addr_road, res_addr_jibun, res_holiday, res_lat, res_long, res_famous_menu, res_rating) ")
+		.append(" values ")
+			.append(" (:resName, :resType, :resAddrRoad, :resAddrJibun, :resHoliday, :resLat, :resLong, :resFamousMenu, :resRating) ")
+		;
+
+		return getJdbcTemplate().update(sb.toString()
+			, new BeanPropertySqlParameterSource(vo)
+		);
+	}
+
+	public int removeRestaurant(RestaurantVO vo) {
+		StringBuilder sb = new StringBuilder();
+
+		sb
+		.append(" delete from ")
+			.append(" wlist ")
+		.append(" where ")
+			.append(" res_id = :resId ")
+		;
+
+		return getJdbcTemplate().update(sb.toString()
+			, new BeanPropertySqlParameterSource(vo)
+		);
+	}
+	
+	private RestaurantVO getRestaurantVO(ResultSet rs, boolean isList) throws SQLException {
 		if( isList ) {
-			return WetVO.builder()
+			return RestaurantVO.builder()
 					.resId( rs.getInt("res_id") )
 					.resName( rs.getString("res_name") )
 					.resType( rs.getString("res_type") )
@@ -80,9 +111,10 @@ public class WetDAO extends CommonDAO {
 					.resLat( rs.getString("res_lat") )
 					.resLong( rs.getString("res_long") )
 					.resFamousMenu( rs.getString("res_famous_menu") )
+					.resRating( rs.getInt( "res_rating" ))
 				.build();
 		} else {
-			return WetVO.builder()
+			return RestaurantVO.builder()
 					.resId( rs.getInt("res_id") )
 					.resName( rs.getString("res_name") )
 					.resType( rs.getString("res_type") )
@@ -92,6 +124,7 @@ public class WetDAO extends CommonDAO {
 					.resLat( rs.getString("res_lat") )
 					.resLong( rs.getString("res_long") )
 					.resFamousMenu( rs.getString("res_famous_menu") )
+					.resRating( rs.getInt( "res_rating" ) )
 				.build();
 		}
 	}

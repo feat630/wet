@@ -5,7 +5,7 @@
             <b-row id="rows">
                 <b-col><a href="mailto:630@hansung.ac.kr">email</a></b-col>
                 <b-col><a href="https://github.com/feat630/wet" target="_blank">GitHub</a></b-col>
-                <b-col><a href="#">Discord</a></b-col>
+                <b-col><a href="https://feat630.tistory.com/category">Blog</a></b-col>
             </b-row>
         </b-container>
   </div>

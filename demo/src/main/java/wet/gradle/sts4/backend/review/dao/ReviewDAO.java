@@ -57,6 +57,8 @@ public class ReviewDAO extends CommonDAO {
 			.append(" wReview ")
 		.append(" WHERE ")
 			.append(" res_id = :resId")
+		.append(" ORDER BY ")
+			.append(" date DESC ")
 		;
 		
 		return getJdbcTemplate().query(sb.toString()
@@ -70,7 +72,7 @@ public class ReviewDAO extends CommonDAO {
 
 		sb
 		.append(" insert into ")
-		.append(" wReview(res_id, user_id, image, rating, user_review) ")
+			.append(" wReview(res_id, user_id, image, rating, user_review) ")
 		.append(" values ")
 			.append(" (:resId, :userId, :image, :rating, :userReview) ")
 		;
@@ -88,6 +90,7 @@ public class ReviewDAO extends CommonDAO {
 					.image(rs.getString( "image" ))
 					.rating(rs.getInt( "rating" ))
 					.userReview(rs.getString("user_review" ))
+					.date(rs.getDate( "date" ))
 				.build();
 		} else {
 			return ReviewVO.builder()
@@ -96,6 +99,7 @@ public class ReviewDAO extends CommonDAO {
 					.image(rs.getString( "image" ))
 					.rating(rs.getInt( "rating" ))
 					.userReview(rs.getString("user_review"))
+					.date(rs.getDate( "date" ))
 				.build();
 		}
 	}
