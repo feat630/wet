@@ -1,5 +1,7 @@
 package wet.gradle.sts4.backend.user.service;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -17,4 +19,7 @@ public class UserService {
 		return userDAO.signIn(vo);
 	}
 
+	public List<UserVO> login(UserVO vo) {
+		return userDAO.login(vo);
+	}
 }

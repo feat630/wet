@@ -2,75 +2,84 @@
   <b-row>
     <b-col></b-col>
     <b-col>
-      <h1>Login</h1>
-      <b-form @submit="onSubmit" @reset="onReset" v-if="show">
-        <b-form-group
-          id="input-group-1"
-          label="Email address:"
-          label-for="input-1"
-          description="We'll never share your email with anyone else."
-        >
-          <b-form-input
-            id="input-1"
-            v-model="form.email"
-            placeholder="Enter email"
-            required
-          ></b-form-input>
-        </b-form-group>
+      <h1>로그인</h1>
+      	<b-form>
+			<b-card class="card">
+				<b-form-group
+				id="input-group-1"
+				label="userId"
+				label-for="input-1"
+				>
+				<b-form-input
+					id="input-1"
+					v-model="form.userId"
+					placeholder="ID"
+					required
+				></b-form-input>
+				</b-form-group>
 
-        <b-form-group id="input-group-2" label="Password:" label-for="input-2">
-          <b-form-input
-            id="input-2"
-            v-model="form.password"
-            type="password"
-            placeholder="Enter password"
-            required
-          ></b-form-input>
-        </b-form-group>
-        <b-button type="submit" variant="primary">로그인</b-button>
-        <b-button to="/signup" type="reset" variant="danger">회원가입</b-button>
-      </b-form>
+				<b-form-group id="input-group-2" label="userPw" label-for="input-2">
+				<b-form-input
+					id="input-2"
+					v-model="form.userPw"
+					type="password"
+					placeholder="PW"
+					required
+				></b-form-input>
+				</b-form-group>
+				<b-row>
+					<b-col>
+						<b-link to="/signup">회원가입</b-link><br>
+						<b-link to="/signup">비밀번호 찾기</b-link>
+					</b-col>
+					<b-col style="text-align:right">
+						<b-button @click="loginProtocol" to variant="primary">로그인</b-button>
+					</b-col>
+				</b-row>
+			</b-card>
+    	</b-form>
     </b-col>
     <b-col></b-col>
   </b-row>
 </template>
 
 <script>
+import http from "../http-common"
 export default {
   data() {
     return {
-      form: {
-        email: "",
-        password: "",
-      },
-      foods: [
-        { text: "Select One", value: null },
-        "Carrots",
-        "Beans",
-        "Tomatoes",
-        "Corn",
-      ],
+		log:"",
+		form: {
+			userId: "",
+			userPw: "",
+		},
       show: true,
     };
   },
+  computed: {
+		setParams() {
+            const params = {
+				userId: this.userId,
+				userPw: this.userPw,
+			}
+			return params;
+		}
+  },
   methods: {
-    onSubmit(event) {
-      event.preventDefault();
-      alert(JSON.stringify(this.form));
-    },
-    onReset(event) {
-      event.preventDefault();
-      // Reset our form values
-      this.form.email = "";
-      this.form.name = "";
-      this.form.food = null;
-      this.form.checked = [];
-      // Trick to reset/clear native browser form validation state
-      this.show = false;
-      this.$nextTick(() => {
-        this.show = true;
-      });
-    },
+    loginProtocol() {
+		http
+		.post("/user/login", this.form)
+        .then(response=>{
+			this.log = response.data;
+        	if(this.log.data[0].loginCheck){
+				this.$router.push('/')
+			}
+        })
+        .catch(e=>{
+           	console.log(e);
+			console.log("실패")
+        });
+	}
   },
 };
 </script>
@@ -83,10 +92,7 @@ export default {
 #input-group-3 {
   margin-bottom: 2.5rem;
 }
-#input-1,
-#input-2,
-#input-3 {
-  margin: 0 auto;
-  width: 70%;
+.card {
+	text-align: left;
 }
 </style>
