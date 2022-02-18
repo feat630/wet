@@ -7,6 +7,7 @@ import { BootstrapVue, BootstrapVueIcons } from 'bootstrap-vue'
 import 'bootstrap/dist/css/bootstrap.min.css'
 import 'bootstrap-vue/dist/bootstrap-vue.css'
 import axios from 'axios'
+import store from 'vuex'
 
 Vue.use(BootstrapVue)
 Vue.use(BootstrapVueIcons)
